@@ -1,23 +1,19 @@
 #include<iostream>
 #include<string>
-
+#include <time.h>
 //Inicialización 2 Tablas
 const short tamaño = 10;
 char tablero1[tamaño][tamaño];
 char tablero2[tamaño][tamaño];
 
 //Función actualizar matriz
-void insertar(char valor, std::string nombreTabla, const short tamaño) {
+void actualizar(const short tamaño) {
+
+	//Comprobar 
 	for (short i = 0; i < tamaño; i++) {
 		for (short j = 0; j < tamaño; j++) {
 
-			//Selecciónado que tabla queremos actualizar
-			if (nombreTabla == "tablero1") {
-
-			}
-			else {
-
-			}
+			
 		}
 	}
 }
@@ -43,7 +39,40 @@ void imprimir(const short tamaño) {
 		std::cout<<std::endl;
 	}
 }
+//Función de verificación de los barcos antes de insertar
+bool verificar() {
+	
+}
+//función número random
+short randNum() {
+	srand(time(NULL));
+	short num  = rand() % 10;//rango 0 a 9
+	
+	return num;
+}
+//función random orientación
+bool randOrientacion() {
+	srand(time(NULL));
+	bool num = rand() % 1;//rango 0 a 1
 
+	return num;
+}
+//función insetar barcos
+void insertarBarcos(){
+	char barco[2];
+
+	//convertimos los números aleatorios en char
+	barco[0] = (char)randNum();
+	barco[1] = (char)randNum();
+	//orientación TRUE para Horizontal
+	if (randOrientacion()) {
+
+	}
+	else {//false para la orietacion vertival
+
+	}
+
+}
 
 void main() {
 	// Valores de la tablas por defecto
