@@ -46,14 +46,14 @@ void verificar() {
 
 }
 
-//Coididencia de barcos
-bool coicidencia(short x, short y) {
+//Coididencia de barcos; fila columna, nombre de la tabla
+bool coicidencia(short x, short y, char nombretablero[tamaño][tamaño]) {
 
 	//Iniciar puntero
 	char* punteroTabla;
 
 	//Para quitar la coicidencia de los barcos
-	punteroTabla = &tablero1[x][y];//asignar dirrección
+	punteroTabla = &nombretablero[x][y];//asignar dirrección
 	if (*punteroTabla != '~') {
 		return true;
 	}
@@ -94,24 +94,26 @@ void insertarBarcos() {
 
 }
 
-//Insertar de manera horizontal
-void modoH(char nomTablero, short* posicionBarco, short* nombreBarco, short tamaño) {
+//Modo Horizontal
+void modoH(char nombreTabla[tamaño][tamaño]) {
+	char* puntero;
+
 	for (short i = 0; i < tamaño; i++) {
 		for (short j = 0; j < tamaño; j++) {
-			if (i == posicionBarco[i] && j == i == posicionBarco[j]) {
-
-			}
-
+			puntero = &nombreTabla[i][j];
+			
 		}
 	}
 }
 
-//Insertar de la manera vertical
-void modoV(short* posicionBarco, short* nombreBarco) {
+//Modo Vertical
+void modoV(char nombreTabla[tamaño][tamaño]) {
+	char* puntero;
+
 	for (short i = 0; i < tamaño; i++) {
 		for (short j = 0; j < tamaño; j++) {
-			tablero1[i][j] = '~';
-			tablero2[i][j] = '~';
+			puntero = &nombreTabla[i][j];
+			j == tamaño-1;//saltarse las filas
 		}
 	}
 }
