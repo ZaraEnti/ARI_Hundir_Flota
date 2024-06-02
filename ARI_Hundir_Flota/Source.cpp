@@ -1,10 +1,14 @@
 #include<iostream>
 #include<string>
 #include <time.h>
+
 //Inicialización 2 Tablas
 const short tamaño = 10;
 char tablero1[tamaño][tamaño];
 char tablero2[tamaño][tamaño];
+
+//puntero para trabajar con las funciones
+char* puntero[10];
 
 //Función actualizar matriz
 void actualizar(const short tamaño) {
@@ -40,8 +44,19 @@ void imprimir(const short tamaño) {
 	}
 }
 //Función de verificación de los barcos antes de insertar
-bool verificar() {
+void verificar() {
 	
+}
+
+//Coididencia de barcos
+bool coicidencia(char* nombreTablero) {
+	//Para quitar la coicidencia de los barcos
+	for (short i = 0; i < tamaño; i++) {
+		for (short j = 0; j < tamaño; j++) {
+			
+
+		}
+	}
 }
 //función número random
 short randNum() {
@@ -72,6 +87,28 @@ void insertarBarcos(){
 
 	}
 
+}
+
+//Insertar de manera horizontal
+void modoH(char nomTablero, short* posicionBarco, short* nombreBarco, short tamaño) {
+	for (short i = 0; i < tamaño; i++) {
+		for (short j = 0; j < tamaño; j++) {
+			if (i == posicionBarco[i] && j == i == posicionBarco[j]) {
+				
+			}
+
+		}
+	}
+}
+
+//Insertar de la manera vertical
+void modoV(short* posicionBarco, short* nombreBarco){
+	for (short i = 0; i < tamaño; i++) {
+		for (short j = 0; j < tamaño; j++) {
+			tablero1[i][j] = '~';
+			tablero2[i][j] = '~';
+		}
+	}
 }
 
 void main() {
