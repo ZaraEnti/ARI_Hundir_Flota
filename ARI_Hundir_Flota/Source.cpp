@@ -55,4 +55,11 @@ void main() {
 	}
 
 	imprimir(tamaño);
+
+	//Inicialización barcos
+	const short barco3[3] = {'3','3','3'};
+	const short barco4[4] = {'4','4','4','4'};
+	const short barco5[5] = {'5','5','5','5','5'};
+	const short barco6[6] = {'6','6','6','6','6','6'};
+
 }
