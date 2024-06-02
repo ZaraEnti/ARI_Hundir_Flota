@@ -7,8 +7,6 @@ const short tamaño = 10;
 char tablero1[tamaño][tamaño];
 char tablero2[tamaño][tamaño];
 
-//puntero para trabajar con las funciones
-char* puntero[10];
 
 //Función actualizar matriz
 void actualizar(const short tamaño) {
@@ -17,7 +15,7 @@ void actualizar(const short tamaño) {
 	for (short i = 0; i < tamaño; i++) {
 		for (short j = 0; j < tamaño; j++) {
 
-			
+
 		}
 	}
 }
@@ -29,7 +27,7 @@ void imprimir(const short tamaño) {
 			std::cout << " " << tablero1[i][j];
 
 		}
-		std::cout<<std::endl;
+		std::cout << std::endl;
 	}
 
 	std::cout << std::endl;
@@ -40,29 +38,36 @@ void imprimir(const short tamaño) {
 			std::cout << " " << tablero2[i][j];
 
 		}
-		std::cout<<std::endl;
+		std::cout << std::endl;
 	}
 }
 //Función de verificación de los barcos antes de insertar
 void verificar() {
-	
+
 }
 
 //Coididencia de barcos
-bool coicidencia(char* nombreTablero) {
-	//Para quitar la coicidencia de los barcos
-	for (short i = 0; i < tamaño; i++) {
-		for (short j = 0; j < tamaño; j++) {
-			
+bool coicidencia(short x, short y) {
 
-		}
+	//Iniciar puntero
+	char* punteroTabla;
+
+	//Para quitar la coicidencia de los barcos
+	punteroTabla = &tablero1[x][y];//asignar dirrección
+	if (*punteroTabla != '~') {
+		return true;
 	}
+	else {
+		return false;
+	}
+
+
 }
 //función número random
 short randNum() {
 	srand(time(NULL));
-	short num  = rand() % 10;//rango 0 a 9
-	
+	short num = rand() % 10;//rango 0 a 9
+
 	return num;
 }
 //función random orientación
@@ -73,7 +78,7 @@ bool randOrientacion() {
 	return num;
 }
 //función insetar barcos
-void insertarBarcos(){
+void insertarBarcos() {
 	char barco[2];
 
 	//convertimos los números aleatorios en char
@@ -94,7 +99,7 @@ void modoH(char nomTablero, short* posicionBarco, short* nombreBarco, short tama
 	for (short i = 0; i < tamaño; i++) {
 		for (short j = 0; j < tamaño; j++) {
 			if (i == posicionBarco[i] && j == i == posicionBarco[j]) {
-				
+
 			}
 
 		}
@@ -102,7 +107,7 @@ void modoH(char nomTablero, short* posicionBarco, short* nombreBarco, short tama
 }
 
 //Insertar de la manera vertical
-void modoV(short* posicionBarco, short* nombreBarco){
+void modoV(short* posicionBarco, short* nombreBarco) {
 	for (short i = 0; i < tamaño; i++) {
 		for (short j = 0; j < tamaño; j++) {
 			tablero1[i][j] = '~';
@@ -123,9 +128,9 @@ void main() {
 	imprimir(tamaño);
 
 	//Inicialización barcos
-	const short barco3[3] = {'3','3','3'};
-	const short barco4[4] = {'4','4','4','4'};
-	const short barco5[5] = {'5','5','5','5','5'};
-	const short barco6[6] = {'6','6','6','6','6','6'};
+	const short barco3[3] = { '3','3','3' };
+	const short barco4[4] = { '4','4','4','4' };
+	const short barco5[5] = { '5','5','5','5','5' };
+	const short barco6[6] = { '6','6','6','6','6','6' };
 
 }
