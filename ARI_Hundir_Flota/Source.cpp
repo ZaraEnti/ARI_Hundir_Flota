@@ -19,7 +19,7 @@ void actualizar(const short tamaño) {
 		}
 	}
 }
-//Función imprimir
+//Función imprimir tableros
 void imprimir(const short tamaño) {
 	std::cout << "Tablero jugador 1" << std::endl;
 	for (short i = 0; i < tamaño; i++) {
@@ -42,18 +42,23 @@ void imprimir(const short tamaño) {
 	}
 }
 //Función de verificación de los barcos antes de insertar
-void verificar() {
-
+void verificar(short x, short y, char nombretablero[tamaño][tamaño]) {
+	
+	//verificar inicial
+	
 }
 
 //Coididencia de barcos; fila columna, nombre de la tabla
 bool coicidencia(short x, short y, char nombretablero[tamaño][tamaño]) {
 
 	//Iniciar puntero
-	char* punteroTabla;
+	char* punteroTabla = &nombretablero[x][y];//asignar dirrección
+
+
 
 	//Para quitar la coicidencia de los barcos
-	punteroTabla = &nombretablero[x][y];//asignar dirrección
+	
+	std::cout << *punteroTabla;
 	if (*punteroTabla != '~') {
 		return true;
 	}
@@ -79,14 +84,15 @@ bool randOrientacion() {
 }
 //función insetar barcos
 void insertarBarcos() {
-	char barco[2];
+	char posicionInicial[2];
 
 	//convertimos los números aleatorios en char
-	barco[0] = (char)randNum();
-	barco[1] = (char)randNum();
+	posicionInicial[0] = (char)randNum();
+	posicionInicial[1] = (char)randNum();
+	
 	//orientación TRUE para Horizontal
 	if (randOrientacion()) {
-
+		 
 	}
 	else {//false para la orietacion vertival
 
@@ -134,5 +140,11 @@ void main() {
 	const short barco4[4] = { '4','4','4','4' };
 	const short barco5[5] = { '5','5','5','5','5' };
 	const short barco6[6] = { '6','6','6','6','6','6' };
-
+	
+	if (coicidencia(2, 3, tablero1)) {
+		std::cout << "si coidide" << std::endl;
+	}
+	else {
+		std::cout << "no coidide" << std::endl;
+	}
 }
