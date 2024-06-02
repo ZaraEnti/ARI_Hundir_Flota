@@ -41,23 +41,17 @@ void imprimir(const short tamaño) {
 		std::cout << std::endl;
 	}
 }
-//Función de verificación de los barcos antes de insertar
-void verificar(short x, short y, char nombretablero[tamaño][tamaño]) {
-	
-	//verificar inicial
-	
-}
+
+
+
 
 //Coididencia de barcos; fila columna, nombre de la tabla
-bool coicidencia(short x, short y, char nombretablero[tamaño][tamaño]) {
+bool coincidencia(short x, short y, char nombretablero[tamaño][tamaño]) {
 
 	//Iniciar puntero
 	char* punteroTabla = &nombretablero[x][y];//asignar dirrección
 
-
-
 	//Para quitar la coicidencia de los barcos
-	
 	std::cout << *punteroTabla;
 	if (*punteroTabla != '~') {
 		return true;
@@ -141,10 +135,5 @@ void main() {
 	const short barco5[5] = { '5','5','5','5','5' };
 	const short barco6[6] = { '6','6','6','6','6','6' };
 	
-	if (coicidencia(2, 3, tablero1)) {
-		std::cout << "si coidide" << std::endl;
-	}
-	else {
-		std::cout << "no coidide" << std::endl;
-	}
+	std::cout << verificar(3, 2, tablero2);
 }
