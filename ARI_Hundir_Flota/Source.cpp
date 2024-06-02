@@ -26,14 +26,14 @@ void imprimir(const short tamaño) {
 	std::cout << "Tablero jugador 1" << std::endl;
 	for (short i = 0; i < tamaño; i++) {
 		for (short j = 0; j < tamaño; j++) {
-			std::cout << " " << tablero1[i][j] << std::endl;
+			std::cout << " " << tablero1[i][j];
 
 		}
 	}
 	std::cout << "Tablero jugador 2" << std::endl;
 	for (short i = 0; i < tamaño; i++) {
 		for (short j = 0; j < tamaño; j++) {
-			std::cout << " " << tablero2[i][j] << std::endl;
+			std::cout << " " << tablero2[i][j];
 
 		}
 	}
