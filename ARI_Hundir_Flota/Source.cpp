@@ -1,11 +1,19 @@
 #include<iostream>
 #include<string>
+#include <stdlib.h> 
 #include <time.h>
 
 //Inicialización 2 Tablas
 const short tamaño = 10;
+
 char tablero1[tamaño][tamaño];
 char tablero2[tamaño][tamaño];
+
+//Numero de la tabla para elejir la tabla en la que sequiere trabajar
+short numTabla;
+
+//Inicialiazación de punteros globales para las dos matrices
+char* puntero=NULL;
 
 
 //Función actualizar matriz
@@ -42,18 +50,18 @@ void imprimir(const short tamaño) {
 	}
 }
 
-
-
-
-//Coididencia de barcos; fila columna, nombre de la tabla
-bool coincidencia(short x, short y, char nombretablero[tamaño][tamaño]) {
-
-	//Iniciar puntero
-	char* punteroTabla = &nombretablero[x][y];//asignar dirrección
+//Coididencia de barcos; numero tabla, fila, columna, puntero
+bool coincidencia(short numTabla, short x, short y, char *puntero) {
+	
+	if (numTabla == 1) {
+		puntero = &tablero1[x][y];
+	}
+	else {
+		puntero = &tablero2[x][y];
+	}
 
 	//Para quitar la coicidencia de los barcos
-	std::cout << *punteroTabla;
-	if (*punteroTabla != '~') {
+	if (*puntero != '~') {
 		return true;
 	}
 	else {
@@ -113,13 +121,13 @@ void modoV(char nombreTabla[tamaño][tamaño]) {
 	for (short i = 0; i < tamaño; i++) {
 		for (short j = 0; j < tamaño; j++) {
 			puntero = &nombreTabla[i][j];
-			j == tamaño-1;//saltarse las filas
+			j = tamaño-1;//saltarse las filas
 		}
 	}
 }
 
 void main() {
-	// Valores de la tablas por defecto
+	// Valores de la tablas por defeceto
 	for (short i = 0; i < tamaño; i++) {
 		for (short j = 0; j < tamaño; j++) {
 			tablero1[i][j] = '~';
@@ -135,5 +143,5 @@ void main() {
 	const short barco5[5] = { '5','5','5','5','5' };
 	const short barco6[6] = { '6','6','6','6','6','6' };
 	
-	std::cout << verificar(3, 2, tablero2);
+	std::cout << coincidencia(1,2,6, puntero);
 }
