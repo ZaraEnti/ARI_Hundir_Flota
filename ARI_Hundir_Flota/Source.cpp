@@ -1,6 +1,6 @@
 #include<iostream>
 #include<string>
-#include <stdlib.h> 
+#include <cstdlib>
 #include <time.h>
 
 //Inicialización 2 Tablas
@@ -9,12 +9,13 @@ const short tamaño = 10;
 char tablero1[tamaño][tamaño];
 char tablero2[tamaño][tamaño];
 
+//No hace falta porque crearemos dos punteros
 //Numero de la tabla para elejir la tabla en la que sequiere trabajar
-short numTabla;
+short numTabla = 1;
 
+//Inicialización de los punteros en sus respectivos matrices que pasaran como parámetro para las funciones
 //Inicialiazación de punteros globales para las dos matrices
 char* puntero = NULL;
-
 
 //Función actualizar matriz
 void actualizar(const short tamaño) {
@@ -27,6 +28,7 @@ void actualizar(const short tamaño) {
 		}
 	}
 }
+
 //Función imprimir tableros
 void imprimir(const short tamaño) {
 	std::cout << "Tablero jugador 1" << std::endl;
@@ -53,7 +55,7 @@ void imprimir(const short tamaño) {
 //Coididencia de barcos; numero tabla, fila, columna, puntero
 bool coincidencia(short numTabla, short x, short y, char* puntero) {
 
-	if (numTabla == 1) {
+	if (numTabla == 1) {//correción de los magic numbers
 		puntero = &tablero1[x][y];
 	}
 	else {
@@ -72,7 +74,7 @@ bool coincidencia(short numTabla, short x, short y, char* puntero) {
 }
 
 //Función para verificar
-bool verificar(short x, short y, char* puntero) {
+void verificar(short x, short y, char* puntero) {
 
 }
 
@@ -83,6 +85,7 @@ short randNum() {
 
 	return num;
 }
+
 //función random orientación
 bool randOrientacion() {
 	srand(time(NULL));
@@ -90,6 +93,7 @@ bool randOrientacion() {
 
 	return num;
 }
+
 //función insetar barcos
 void insertarBarcos() {
 	char posicionInicial[2];
@@ -151,31 +155,4 @@ void main() {
 	const short barco5[5] = { '5','5','5','5','5' };
 	const short barco6[6] = { '6','6','6','6','6','6' };
 
-	//Generar posición aleatoria
-	short numRanX = randNum();
-	short numRanY = randNum();
-
-	std::cout << numRanX << std::endl;
-	//Para ambos jugadores determinar si coicide o no
-		bool coicide = coincidencia(1, numRanX, numRanY, puntero);
-
-	//Si el número de la posición Inicial coicide con algun barco generar otra vez
-
-	while (coicide)
-	{
-		short numRanX = randNum();
-		short numRanY = randNum();
-
-		bool coicide = coincidencia(1, numRanX, numRanY, puntero);
-	}
-	//tenemos numRandX jugador 1
-
-	
-
-	//Verificación de poner el barco según el modo
-
-	//Random modo H para true V para false
-
-
-	std::cout << numRanX;
 }
