@@ -52,7 +52,7 @@ bool coincidencia(short x, short y, std::string nombreTablero) {
 	if (nombreTablero == "tablero1") {//correción de los magic numbers
 		puntero = &tablero1[x][y];
 	}
-	else if(nombreTablero == "tablero2") {
+	else if (nombreTablero == "tablero2") {
 		puntero = &tablero2[x][y];
 	}
 	else {//Si el nombre del tablero es diferente (Añadir otro jugador por ejemplo)
@@ -73,23 +73,23 @@ void verificar(short x, short y, char* puntero) {
 
 }
 
-//función número random
+//Función número random rango del 0 a 9
 short randNum() {
 	srand(time(NULL));
-	short num = rand() % 10;//rango 0 a 9
+	short num = rand() % 10;
 
 	return num;
 }
 
-//función random orientación
+//Función random orientación 0 o 1. 0 para horizontal y 1 para vertical
 bool randOrientacion() {
 	srand(time(NULL));
-	bool num = rand() % 1;//rango 0 a 1
+	bool num = rand() % 1;
 
 	return num;
 }
 
-//función insetar barcos
+//Función insetar barcos
 void insertarBarcos() {
 	char posicionInicial[2];
 
@@ -107,16 +107,30 @@ void insertarBarcos() {
 
 }
 
-//Modo Horizontal
-void modoH(char nombreTabla[tamaño][tamaño]) {
-	char* puntero;
-
-	for (short i = 0; i < tamaño; i++) {
-		for (short j = 0; j < tamaño; j++) {
-			puntero = &nombreTabla[i][j];
-
+//Comprobación del espacio modo horizontal para cada barco
+bool modoH(short x, std::string barco) {
+	
+	if (barco == "barco3") {
+		if (x > 7) {
+			return false;
 		}
 	}
+	else if (barco == "barco4"){
+		if (x > 6) {
+			return false;
+		}
+	}else if(barco =="barco5") {
+		if (x > 5) {
+			return false;
+		}
+	
+	} else {//barco6 es menor de este rango
+		if (x > 4) {
+			return false;
+		}
+	}
+	return true;
+
 }
 
 //Modo Vertical
@@ -144,11 +158,44 @@ void main() {
 	imprimir(tamaño);
 
 	//Parte 2: Barcos
-	//Inicialización barcos
-	const short barco3[3] = { '3','3','3' };
-	const short barco4[4] = { '4','4','4','4' };
-	const short barco5[5] = { '5','5','5','5','5' };
-	const short barco6[6] = { '6','6','6','6','6','6' };
+	//Inicialización barcos a cada jugaddor 
+	
+	char barcosJugador1[4][6] = 
+	{ { '3','3','3' },
+	{ '4', '4', '4', '4' },
+	{ '5', '5', '5', '5', '5' },
+	{ '6', '6', '6', '6', '6', '6' } };
 
-	std::cout<<coincidencia(2, 3, "tablero1");
+	char barcosJugador2[4][6] =
+	{ { '3','3','3' },
+	{ '4', '4', '4', '4' },
+	{ '5', '5', '5', '5', '5' },
+	{ '6', '6', '6', '6', '6', '6' } };
+	
+	//Generación de dos números aleatorios que sera el origen de la casilla
+	short x = randNum();
+	short y = randNum();
+	
+	//Pruba de funcionamiento
+	std::cout << coincidencia(x, y, "tablero1");
+
+	//Orientación de cada barco seguidamente comprovación 
+	for (short i = 0; i < 4; i++) {
+		randOrientacion();
+		if (randOrientacion()) {
+			//vertical
+
+		}
+		else {
+			//horizontal
+		}
+	}
+
+
+
+	//Gameplay
+	bool gameOver = false;
+	while (!gameOver) {
+
+	}
 }
