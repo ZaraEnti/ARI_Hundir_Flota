@@ -68,8 +68,38 @@ bool coincidencia(short x, short y, std::string nombreTablero) {
 	}
 }
 
-//Función para verificar
-void verificar(short x, short y, char* puntero) {
+//Función para verificar que hhay espacio para el barco
+void verificar(short x, short y, char* puntero, std::string barco, std::string nombreTablero) {
+	//Comprovbar primero si el origen es agua
+	bool coicide = coincidencia(x, y, nombreTablero);
+	while (coicide) {
+		x = randNum();
+		y = randNum();
+		coicide = coincidencia(x, y, nombreTablero);
+	}
+
+	//Generar modo de orientación aleatria
+	bool orientacion = randOrientacion();
+
+	//Si es verdadero es en vertivcal si es falso en borizontal
+	if (orientacion) {//Vertical
+		bool hayEspacio = modoV(y, barco);
+
+
+		while (!hayEspacio) {//Vertical
+			//llamar otra vez para que genere un origen nuvo y orientación nueva
+			verificar(x, y,puntero, barco, nombreTablero);
+
+		}
+	}
+	else {//horizontal
+		bool hayEspacio = modoH(x, barco);
+		
+		while (!hayEspacio) {
+			verificar(x, y, puntero, barco, nombreTablero);
+		}
+	}
+
 
 }
 
@@ -191,9 +221,7 @@ void main() {
 	short x = randNum();
 	short y = randNum();
 	
-	//Pruba de funcionamiento
-	std::cout << coincidencia(x, y, "tablero1");
-
+	
 	//Orientación de cada barco seguidamente comprovación 
 	for (short i = 0; i < 4; i++) {
 		randOrientacion();
