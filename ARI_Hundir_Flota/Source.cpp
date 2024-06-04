@@ -88,15 +88,15 @@ bool coincidencia(short x, short y, std::string nombreTablero) {
 		puntero = &tablero1[x][y];
 	}
 	else if (nombreTablero == "tablero2") {
-		puntero = &tablero1[x][y];
+		puntero = &tablero2[x][y];
 	}
 	
 	//Aciertos de los barcos
 	if (nombreTablero == "tableroJugador1") {//correción de los magic numbers
-		puntero = &tablero1[x][y];
+		puntero = &tablero1[x][y];//Tiene que ser el tablero del contricante
 	}
 	else if (nombreTablero == "tableroJugador2") {
-		puntero = &tablero1[x][y];
+		puntero = &tablero2[x][y];
 	}
 
 
@@ -352,7 +352,34 @@ void ponerBarcosJugadores(std::string barco, std::string nombreTabla) {
 	
 
 }
+//Función para saber quien gana la partida
+bool win(std::string nombreTablero) {
+	if (nombreTablero == "tableroJugador1") {
+		for (short i = 0; i < tamaño; i++) {
+			for (short j = 0; j < tamaño; j++) {
 
+				if ((tableroJugador1[i][j] != '~') || (tableroJugador1[i][j] != 'O') || (tableroJugador1[i][j] != 'X')) {
+					return false;
+				}
+			}
+		}
+		std::cout << "enorabuena jugador 2 has ganado!!" << std::endl;
+		return true;
+	}
+	if(nombreTablero == "tableroJugador2"){
+		for (short i = 0; i < tamaño; i++) {
+			for (short j = 0; j < tamaño; j++) {
+
+				if ((tableroJugador2[i][j] != '~') || (tableroJugador2[i][j] != 'O') || (tableroJugador2[i][j] != 'X')) {
+					return false;
+				}
+			}
+			std::cout << "enorabuena jugador 1 has ganado!!" << std::endl;
+		}
+		return true;
+	}
+	
+}
 
 
 void main() {
@@ -399,25 +426,51 @@ void main() {
 	}
 	
 	while (!gameOver) {
-		turno ? turno = false : turno = true;
 		
 		short x, y;
 		//Jugador 1
 		if (turno) {
-			
+			std::cout << "Jugador 1" << std::endl;
 			std::cout<<"Introduce la fila" << std::endl;
 			std::cin >> x;
 
 			std::cout << "Introduce columna" << std::endl;
 			std::cin >> y;
+			bool acierto = coincidencia(x, y, "tableroJugador2");
+			if(acierto) {
+				tableroJugador2[x][y] = '0';
+			}
+			else {
+				tableroJugador2[x][y] = 'X';	
+			}
+			imprimir(tamaño, "tableroJugador1");
 
+			gameOver = win("tableroJugador2");
+			
+			//cambiar turno
+			turno ? turno = false : turno = true;
 		}
 		else {//Turno del jugador 2
+			std::cout << "Jugador 2" << std::endl;
 			std::cout << "Introduce la fila" << std::endl;
 			std::cin >> x;
 
 			std::cout << "Introduce columna" << std::endl;
 			std::cin >> y;
+			
+			bool acierto = coincidencia(x, y, "tableroJugador1");
+			if (acierto) {
+				tableroJugador1[x][y] = '0';
+			}
+			else {
+				tableroJugador1[x][y] = 'X';
+			}
+			imprimir(tamaño, "tableroJugador2");
+
+			//Verificar si el jugador 1 es derrotado
+			gameOver = win("tableroJugador1");
+			//Para cambiar el turno
+			turno ? turno = false : turno = true;
 		}
 
 
