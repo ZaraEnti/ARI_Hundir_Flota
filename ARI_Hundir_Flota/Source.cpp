@@ -1,6 +1,6 @@
 #include<iostream>
 #include<string>
-#include <cstdlib>
+#include <stdlib.h>
 #include <time.h>
 
 //Inicialización 2 Tablas
@@ -42,9 +42,10 @@ void imprimir(const short tamaño) {
 	}
 }
 
+
 //Función número random rango del 0 a 9
 short randNum() {
-	srand(time(NULL));
+
 	short num = rand() % 10;
 
 	return num;
@@ -117,69 +118,98 @@ bool modoH(short x, std::string barco) {
 bool modoV(short y, std::string barco) {
 
 	if (barco == "barco3") {
+		std::cout << "dentro barco 3" << std::endl;
 		if (y > 7) {
+			std::cout << "no cabe el barco 3 en la tabla" << std::endl;
 			return false;
 		}
 	}
 	else if (barco == "barco4") {
 		if (y > 6) {
 			return false;
+			std::cout << "no cabe el barco 4 en la tabla" << std::endl;
 		}
 	}
 	else if (barco == "barco5") {
 		if (y > 5) {
 			return false;
+			std::cout << "no cabe el barco 5 en la tabla" << std::endl;
 		}
 
 	}
 	else {//barco6 es menor de este rango
 		if (y > 4) {
 			return false;
+			std::cout << "no cabe el barco 6 en la tabla" << std::endl;
 		}
 	}
 	return true;
 }
 //Función para verificar que hhay espacio para el barco
-bool verificar(short x, short y, char* puntero, std::string barco, std::string nombreTablero, short* punteroOrigenX, short* punteroOrigenY) {
-	
-	//Comprovbar primero si el origen es agua
-	bool coicide = coincidencia(x, y, nombreTablero);
-	while (coicide) {
-		x = randNum();
-		y = randNum();
-		coicide = coincidencia(x, y, nombreTablero);
-	}
+bool verificar(short x, short y, std::string barco, std::string nombreTablero, bool orientacion) {
 
-	//Generar modo de orientación aleatoria
-	bool orientacion = randOrientacion();
+	short longBarco;
+	//Para saber la longitud del barco
+	if (barco == "barco3") {
+		longBarco = 3;
+	}
+	else if (barco == "barco4") {
+		longBarco = 4;
+	}
+	else if (barco == "barco5") {
+		longBarco = 5;
+	}
+	else {//barco6 es menor de este rango
+		longBarco = 6;
+	}
 
 	//Si es verdadero es en vertivcal si es falso en borizontal
 	if (orientacion) {//Vertical
-		bool hayEspacio = modoV(y, barco);
+		if (nombreTablero == "tablero1") {
 
-
-		while (!hayEspacio) {//Vertical
-			//llamar otra vez para que genere un origen nuvo y orientación nueva
-			verificar(x, y,puntero, barco, nombreTablero, punteroOrigenX, punteroOrigenY);
-
+			for (short i = y; i < (y + longBarco); i++) {
+				std::cout << "comprobando si se puede";
+				if (!tablero1[i][x] == '~') {
+					return false;
+				}
+			}
+		}
+		else if (nombreTablero == "tablero2") {
+			for (short i = y; i < (y + longBarco); i++) {
+				std::cout << "comprobando si se puede";
+				if (!tablero2[i][x] == '~') {
+					return false;
+				}
+			}
+		}
+		else {//Si el nombre del tablero es diferente (Añadir otro jugador por ejemplo)
+			std::cout << "No hay este tablero" << std::endl;
 		}
 
-		//Modificación de los valores de origen en el main si hubo un cambio de origen
-		*punteroOrigenX = x;
-		*punteroOrigenY = y;
-		return true;
 	}
 	else {//horizontal
-		bool hayEspacio = modoH(x, barco);
-		
-		while (!hayEspacio) {
-			verificar(x, y, puntero, barco, nombreTablero, punteroOrigenX, punteroOrigenY);
+
+		if (nombreTablero == "tablero1") {
+			for (short i = x; i < (x + longBarco); i++) {
+				std::cout << "comprobando si se puede";
+				if (!tablero1[y][i] == '~') {
+					return false;
+				}
+			}
+		}
+		else if (nombreTablero == "tablero2") {
+			for (short i = x; i < (x + longBarco); i++) {
+				std::cout << "comprobando si se puede";
+				if (!tablero2[y][i] == '~') {
+					return false;
+				}
+			}
+		}
+		else {//Si el nombre del tablero es diferente (Añadir otro jugador por ejemplo)
+			std::cout << "No hay este tablero" << std::endl;
 		}
 
-		//Modificación de los valores de origen en el main si hubo un cambio de origen
-		*punteroOrigenX = x;
-		*punteroOrigenY = y;
-		return false;
+
 	}
 
 
@@ -206,22 +236,24 @@ void insertarBarcos(short x, short y, std::string nombreTablero, std::string bar
 
 	//Cual tablero hay que insertar
 	if (nombreTablero == "tablero1") {
-		
+
 		if (modoInsercción) {
 			for (short i = y; i < y + longBarco; i++) {
 
 				tablero1[i][x] = (char)longBarco;//podemos hacer lo ashí porque coicide con el valor del barco
+				std::cout << tablero1[i][x];
 			}
 		}
 		else {
 			for (short j = x; j < x + longBarco; j++) {
 
 				tablero1[y][j] = (char)longBarco;//podemos hacer lo ashí porque coicide con el valor del barco
+				std::cout << tablero1[y][j];
 			}
 		}
-		
-		
-		
+
+
+
 	}
 	else if (nombreTablero == "tablero2") {
 
@@ -229,25 +261,27 @@ void insertarBarcos(short x, short y, std::string nombreTablero, std::string bar
 			for (short i = y; i < y + longBarco; i++) {
 
 				tablero2[i][x] = (char)longBarco;//podemos hacer lo ashí porque coicide con el valor del barco
+				std::cout << tablero2[i][x];
 			}
 		}
 		else {
 			for (short j = x; j < x + longBarco; j++) {
 
 				tablero2[y][j] = (char)longBarco;//podemos hacer lo ashí porque coicide con el valor del barco
+				std::cout << tablero2[y][j];
 			}
 
 		}
-		
+
 	}
 	else {//Si el nombre del tablero es diferente (Añadir otro jugador por ejemplo)
 		std::cout << "No hay este tablero" << std::endl;
 	}
-	
-	
 
-	
-	
+
+
+
+
 
 }
 
@@ -267,8 +301,8 @@ void main() {
 
 	//Parte 2: Barcos
 	//Inicialización barcos a cada jugaddor 
-	
-	char barcosJugador1[4][6] = 
+
+	char barcosJugador1[4][6] =
 	{ { '3','3','3' },
 	{ '4', '4', '4', '4' },
 	{ '5', '5', '5', '5', '5' },
@@ -279,22 +313,50 @@ void main() {
 	{ '4', '4', '4', '4' },
 	{ '5', '5', '5', '5', '5' },
 	{ '6', '6', '6', '6', '6', '6' } };
-	
+
 	//Generación de dos números aleatorios que sera el origen de la casilla
+	srand(time(NULL));//Ponemos la semilla para que nos de diferentes resultados según transcure el tiempo dando valores diferentes
 	short x = randNum();
 	short y = randNum();
+	std::cout << "Numero rand x: " << x << std::endl;
+	std::cout << "Numero rand y: " << y << std::endl;
 
-	//Asignación de puntero para cambiar el valor del origen en la función main()
-	short* punteroOrigenX =&x;
-	short* punteroOrigenY =&y;
-	
-	//Verificación de los 4 barcos
+	//Confirmar que la casilla tomada es agua
+	bool coicide = coincidencia(x, y, "tablero1");
+	while (coicide)
+	{
+		x = randNum();
+		y = randNum();
+	}
+	//Generara orientación
+	bool orientacion = randOrientacion();
+	if (orientacion) {//vertical
+		bool hayEspacio = modoV(y, "barco1");
+
+		while (!hayEspacio)
+		{
+			y = randNum();
+			hayEspacio = modoV(y, "barco1");
+		}
+	}
+	else {//Horizontal
+		bool hayEspacio = modoH(x, "barco1");
+
+		while (!hayEspacio)
+		{
+			x = randNum();
+			hayEspacio = modoV(x, "barco1");
+		}
+	}
+
+
+	imprimir(tamaño);
 
 
 
 	//Gameplay
-	bool gameOver = false;
-	while (!gameOver) {
+	//bool gameOver = false;
+	//while (!gameOver) {
 
-	}
+	//}
 }
