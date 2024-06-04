@@ -6,6 +6,7 @@
 //Inicialización 2 Tablas para la colocación de los barcos
 const short tamaño = 10;
 
+//2 tablero par los barcos
 char tablero1[tamaño][tamaño];
 char tablero2[tamaño][tamaño];
 
@@ -364,9 +365,9 @@ bool win(std::string nombreTablero) {
 			}
 		}
 		std::cout << "enorabuena jugador 2 has ganado!!" << std::endl;
-		return true;
+		
 	}
-	if(nombreTablero == "tableroJugador2"){
+	else (nombreTablero == "tableroJugador2") {
 		for (short i = 0; i < tamaño; i++) {
 			for (short j = 0; j < tamaño; j++) {
 
@@ -376,8 +377,8 @@ bool win(std::string nombreTablero) {
 			}
 			std::cout << "enorabuena jugador 1 has ganado!!" << std::endl;
 		}
-		return true;
 	}
+		return true;
 	
 }
 
@@ -430,21 +431,29 @@ void main() {
 		short x, y;
 		//Jugador 1
 		if (turno) {
+			//Introducir las posiciones de las casillas
 			std::cout << "Jugador 1" << std::endl;
 			std::cout<<"Introduce la fila" << std::endl;
 			std::cin >> x;
 
 			std::cout << "Introduce columna" << std::endl;
 			std::cin >> y;
+			
+			//Comprobación de la casilla si es agua o barco
 			bool acierto = coincidencia(x, y, "tableroJugador2");
+			
+			
 			if(acierto) {
+				//Insertar si es barco 
 				tableroJugador2[x][y] = '0';
 			}
 			else {
+				//Insertar si es agua
 				tableroJugador2[x][y] = 'X';	
 			}
 			imprimir(tamaño, "tableroJugador1");
 
+			//Comprobación que que no quede ningñun barco del jugador contrario
 			gameOver = win("tableroJugador2");
 			
 			//cambiar turno
