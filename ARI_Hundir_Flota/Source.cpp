@@ -42,6 +42,23 @@ void imprimir(const short tamaño) {
 	}
 }
 
+//Función número random rango del 0 a 9
+short randNum() {
+	srand(time(NULL));
+	short num = rand() % 10;
+
+	return num;
+}
+
+//Función random orientación 0 o 1. 0 para horizontal y 1 para vertical
+bool randOrientacion() {
+	srand(time(NULL));
+	bool num = rand() % 1;
+
+	return num;
+}
+
+
 //Función coididencia de 1 casilla si es '~' o no. Fila, columna y nombre del tablero
 bool coincidencia(short x, short y, std::string nombreTablero) {
 
@@ -68,90 +85,26 @@ bool coincidencia(short x, short y, std::string nombreTablero) {
 	}
 }
 
-//Función para verificar que hhay espacio para el barco
-void verificar(short x, short y, char* puntero, std::string barco, std::string nombreTablero, short* punteroOrigenX, short* punteroOrigenY) {
-	
-	//Comprovbar primero si el origen es agua
-	bool coicide = coincidencia(x, y, nombreTablero);
-	while (coicide) {
-		x = randNum();
-		y = randNum();
-		coicide = coincidencia(x, y, nombreTablero);
-	}
-
-	//Generar modo de orientación aleatoria
-	bool orientacion = randOrientacion();
-
-	//Si es verdadero es en vertivcal si es falso en borizontal
-	if (orientacion) {//Vertical
-		bool hayEspacio = modoV(y, barco);
-
-
-		while (!hayEspacio) {//Vertical
-			//llamar otra vez para que genere un origen nuvo y orientación nueva
-			verificar(x, y,puntero, barco, nombreTablero, punteroOrigenX, punteroOrigenY);
-
-		}
-
-		//Modificación de los valores de origen en el main si hubo un cambio de origen
-		*punteroOrigenX = x;
-		*punteroOrigenY = y;
-	}
-	else {//horizontal
-		bool hayEspacio = modoH(x, barco);
-		
-		while (!hayEspacio) {
-			verificar(x, y, puntero, barco, nombreTablero, punteroOrigenX, punteroOrigenY);
-		}
-
-		//Modificación de los valores de origen en el main si hubo un cambio de origen
-		*punteroOrigenX = x;
-		*punteroOrigenY = y;
-	}
-
-
-}
-
-//Función número random rango del 0 a 9
-short randNum() {
-	srand(time(NULL));
-	short num = rand() % 10;
-
-	return num;
-}
-
-//Función random orientación 0 o 1. 0 para horizontal y 1 para vertical
-bool randOrientacion() {
-	srand(time(NULL));
-	bool num = rand() % 1;
-
-	return num;
-}
-
-//Función insetar barcos
-void insertarBarcos(short x, short y, char*puntero) {
-	
-
-}
-
 //Función Comprobación del espacio modo horizontal para cada barco
 bool modoH(short x, std::string barco) {
-	
+
 	if (barco == "barco3") {
 		if (x > 7) {
 			return false;
 		}
 	}
-	else if (barco == "barco4"){
+	else if (barco == "barco4") {
 		if (x > 6) {
 			return false;
 		}
-	}else if(barco =="barco5") {
+	}
+	else if (barco == "barco5") {
 		if (x > 5) {
 			return false;
 		}
-	
-	} else {//barco6 es menor de este rango
+
+	}
+	else {//barco6 es menor de este rango
 		if (x > 4) {
 			return false;
 		}
@@ -186,6 +139,119 @@ bool modoV(short y, std::string barco) {
 	}
 	return true;
 }
+//Función para verificar que hhay espacio para el barco
+bool verificar(short x, short y, char* puntero, std::string barco, std::string nombreTablero, short* punteroOrigenX, short* punteroOrigenY) {
+	
+	//Comprovbar primero si el origen es agua
+	bool coicide = coincidencia(x, y, nombreTablero);
+	while (coicide) {
+		x = randNum();
+		y = randNum();
+		coicide = coincidencia(x, y, nombreTablero);
+	}
+
+	//Generar modo de orientación aleatoria
+	bool orientacion = randOrientacion();
+
+	//Si es verdadero es en vertivcal si es falso en borizontal
+	if (orientacion) {//Vertical
+		bool hayEspacio = modoV(y, barco);
+
+
+		while (!hayEspacio) {//Vertical
+			//llamar otra vez para que genere un origen nuvo y orientación nueva
+			verificar(x, y,puntero, barco, nombreTablero, punteroOrigenX, punteroOrigenY);
+
+		}
+
+		//Modificación de los valores de origen en el main si hubo un cambio de origen
+		*punteroOrigenX = x;
+		*punteroOrigenY = y;
+		return true;
+	}
+	else {//horizontal
+		bool hayEspacio = modoH(x, barco);
+		
+		while (!hayEspacio) {
+			verificar(x, y, puntero, barco, nombreTablero, punteroOrigenX, punteroOrigenY);
+		}
+
+		//Modificación de los valores de origen en el main si hubo un cambio de origen
+		*punteroOrigenX = x;
+		*punteroOrigenY = y;
+		return false;
+	}
+
+
+}
+
+
+//Función insetar barcos
+void insertarBarcos(short x, short y, std::string nombreTablero, std::string barco, bool modoInsercción) {
+	short longBarco;
+
+	//Para saber la longitud del barco
+	if (barco == "barco3") {
+		longBarco = 3;
+	}
+	else if (barco == "barco4") {
+		longBarco = 4;
+	}
+	else if (barco == "barco5") {
+		longBarco = 5;
+	}
+	else {//barco6 es menor de este rango
+		longBarco = 6;
+	}
+
+	//Cual tablero hay que insertar
+	if (nombreTablero == "tablero1") {
+		
+		if (modoInsercción) {
+			for (short i = y; i < y + longBarco; i++) {
+
+				tablero1[i][x] = (char)longBarco;//podemos hacer lo ashí porque coicide con el valor del barco
+			}
+		}
+		else {
+			for (short j = x; j < x + longBarco; j++) {
+
+				tablero1[y][j] = (char)longBarco;//podemos hacer lo ashí porque coicide con el valor del barco
+			}
+		}
+		
+		
+		
+	}
+	else if (nombreTablero == "tablero2") {
+
+		if (modoInsercción) {
+			for (short i = y; i < y + longBarco; i++) {
+
+				tablero2[i][x] = (char)longBarco;//podemos hacer lo ashí porque coicide con el valor del barco
+			}
+		}
+		else {
+			for (short j = x; j < x + longBarco; j++) {
+
+				tablero2[y][j] = (char)longBarco;//podemos hacer lo ashí porque coicide con el valor del barco
+			}
+
+		}
+		
+	}
+	else {//Si el nombre del tablero es diferente (Añadir otro jugador por ejemplo)
+		std::cout << "No hay este tablero" << std::endl;
+	}
+	
+	
+
+	
+	
+
+}
+
+
 
 void main() {
 	//Parte 1: Tablero
