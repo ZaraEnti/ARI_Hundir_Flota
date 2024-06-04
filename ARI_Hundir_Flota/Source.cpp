@@ -69,7 +69,8 @@ bool coincidencia(short x, short y, std::string nombreTablero) {
 }
 
 //Función para verificar que hhay espacio para el barco
-void verificar(short x, short y, char* puntero, std::string barco, std::string nombreTablero) {
+void verificar(short x, short y, char* puntero, std::string barco, std::string nombreTablero, short* punteroOrigenX, short* punteroOrigenY) {
+	
 	//Comprovbar primero si el origen es agua
 	bool coicide = coincidencia(x, y, nombreTablero);
 	while (coicide) {
@@ -78,7 +79,7 @@ void verificar(short x, short y, char* puntero, std::string barco, std::string n
 		coicide = coincidencia(x, y, nombreTablero);
 	}
 
-	//Generar modo de orientación aleatria
+	//Generar modo de orientación aleatoria
 	bool orientacion = randOrientacion();
 
 	//Si es verdadero es en vertivcal si es falso en borizontal
@@ -88,16 +89,24 @@ void verificar(short x, short y, char* puntero, std::string barco, std::string n
 
 		while (!hayEspacio) {//Vertical
 			//llamar otra vez para que genere un origen nuvo y orientación nueva
-			verificar(x, y,puntero, barco, nombreTablero);
+			verificar(x, y,puntero, barco, nombreTablero, punteroOrigenX, punteroOrigenY);
 
 		}
+
+		//Modificación de los valores de origen en el main si hubo un cambio de origen
+		*punteroOrigenX = x;
+		*punteroOrigenY = y;
 	}
 	else {//horizontal
 		bool hayEspacio = modoH(x, barco);
 		
 		while (!hayEspacio) {
-			verificar(x, y, puntero, barco, nombreTablero);
+			verificar(x, y, puntero, barco, nombreTablero, punteroOrigenX, punteroOrigenY);
 		}
+
+		//Modificación de los valores de origen en el main si hubo un cambio de origen
+		*punteroOrigenX = x;
+		*punteroOrigenY = y;
 	}
 
 
@@ -120,20 +129,8 @@ bool randOrientacion() {
 }
 
 //Función insetar barcos
-void insertarBarcos() {
-	char posicionInicial[2];
-
-	//convertimos los números aleatorios en char
-	posicionInicial[0] = (char)randNum();
-	posicionInicial[1] = (char)randNum();
-
-	//orientación TRUE para Horizontal
-	if (randOrientacion()) {
-
-	}
-	else {//false para la orietacion vertival
-
-	}
+void insertarBarcos(short x, short y, char*puntero) {
+	
 
 }
 
@@ -220,19 +217,12 @@ void main() {
 	//Generación de dos números aleatorios que sera el origen de la casilla
 	short x = randNum();
 	short y = randNum();
-	
-	
-	//Orientación de cada barco seguidamente comprovación 
-	for (short i = 0; i < 4; i++) {
-		randOrientacion();
-		if (randOrientacion()) {
-			//vertical
 
-		}
-		else {
-			//horizontal
-		}
-	}
+	//Asignación de puntero para cambiar el valor del origen en la función main()
+	short* punteroOrigenX =&x;
+	short* punteroOrigenY =&y;
+	
+	//Verificación de los 4 barcos
 
 
 
