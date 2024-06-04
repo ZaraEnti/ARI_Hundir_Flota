@@ -107,7 +107,7 @@ void insertarBarcos() {
 
 }
 
-//Comprobación del espacio modo horizontal para cada barco
+//Función Comprobación del espacio modo horizontal para cada barco
 bool modoH(short x, std::string barco) {
 	
 	if (barco == "barco3") {
@@ -133,16 +133,31 @@ bool modoH(short x, std::string barco) {
 
 }
 
-//Modo Vertical
-void modoV(char nombreTabla[tamaño][tamaño]) {
-	char* puntero;
+//Función Comprobación Modo Vertical
+bool modoV(short y, std::string barco) {
 
-	for (short i = 0; i < tamaño; i++) {
-		for (short j = 0; j < tamaño; j++) {
-			puntero = &nombreTabla[i][j];
-			j = tamaño - 1;//saltarse las filas
+	if (barco == "barco3") {
+		if (y > 7) {
+			return false;
 		}
 	}
+	else if (barco == "barco4") {
+		if (y > 6) {
+			return false;
+		}
+	}
+	else if (barco == "barco5") {
+		if (y > 5) {
+			return false;
+		}
+
+	}
+	else {//barco6 es menor de este rango
+		if (y > 4) {
+			return false;
+		}
+	}
+	return true;
 }
 
 void main() {
