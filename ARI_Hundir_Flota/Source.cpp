@@ -3,33 +3,63 @@
 #include <cstdlib>
 #include <ctime>
 
-//Inicialización 2 Tablas
+//Inicialización 2 Tablas para la colocación de los barcos
 const short tamaño = 10;
 
 char tablero1[tamaño][tamaño];
 char tablero2[tamaño][tamaño];
 
+//2 tableros de los jugadores
+char tableroJugador1[tamaño][tamaño];
+char tableroJugador2[tamaño][tamaño];
+
 //Función imprimir tableros
-void imprimir(const short tamaño) {
-	std::cout << "Tablero jugador 1" << std::endl;
-	for (short i = 0; i < tamaño; i++) {
-		for (short j = 0; j < tamaño; j++) {
-			std::cout << " " << tablero1[i][j];
+void imprimir(const short tamaño, std::string nombretablero) {
+	//Para imprimir el tablero que contiene los barcos
+	if (nombretablero == "tablero1" || nombretablero == "tablero2") {
+		std::cout << "Tablero jugador 1" << std::endl;
+		for (short i = 0; i < tamaño; i++) {
+			for (short j = 0; j < tamaño; j++) {
+				std::cout << " " << tablero1[i][j];
 
+			}
+			std::cout << std::endl;
 		}
+
 		std::cout << std::endl;
-	}
 
-	std::cout << std::endl;
+		std::cout << "Tablero jugador 2" << std::endl;
+		for (short i = 0; i < tamaño; i++) {
+			for (short j = 0; j < tamaño; j++) {
+				std::cout << " " << tablero2[i][j];
 
-	std::cout << "Tablero jugador 2" << std::endl;
-	for (short i = 0; i < tamaño; i++) {
-		for (short j = 0; j < tamaño; j++) {
-			std::cout << " " << tablero2[i][j];
-
+			}
+			std::cout << std::endl;
 		}
-		std::cout << std::endl;
 	}
+	//Para imprimir el tablero de los jugadores durante el juego
+	if (nombretablero == "tableroJugador1" || nombretablero == "tableroJugador2") {
+		std::cout << "Tablero jugador 1" << std::endl;
+		for (short i = 0; i < tamaño; i++) {
+			for (short j = 0; j < tamaño; j++) {
+				std::cout << " " << tableroJugador1[i][j];
+
+			}
+			std::cout << std::endl;
+		}
+
+		std::cout << std::endl;
+
+		std::cout << "Tablero jugador 2" << std::endl;
+		for (short i = 0; i < tamaño; i++) {
+			for (short j = 0; j < tamaño; j++) {
+				std::cout << " " << tableroJugador2[i][j];
+
+			}
+			std::cout << std::endl;
+		}
+	}
+	
 }
 
 
@@ -60,9 +90,15 @@ bool coincidencia(short x, short y, std::string nombreTablero) {
 	else if (nombreTablero == "tablero2") {
 		puntero = &tablero1[x][y];
 	}
-	else {//Si el nombre del tablero es diferente (Añadir otro jugador por ejemplo)
-		std::cout << "No hay este tablero" << std::endl;
+	
+	//Aciertos de los barcos
+	if (nombreTablero == "tableroJugador1") {//correción de los magic numbers
+		puntero = &tablero1[x][y];
 	}
+	else if (nombreTablero == "tableroJugador2") {
+		puntero = &tablero1[x][y];
+	}
+
 
 	//Comprovación de la casilla
 	if (*puntero != '~') {
@@ -329,7 +365,7 @@ void main() {
 		}
 	}
 	//Mostrar tablero
-	imprimir(tamaño);
+	imprimir(tamaño, "tablero1");
 
 	//Parte 2: Barcos
 	//Inicialización barcos a cada jugaddor 
@@ -345,12 +381,47 @@ void main() {
 	ponerBarcosJugadores("barco5", "tablero2");
 	ponerBarcosJugadores("barco6", "tablero2");
 	
-	imprimir(tamaño);
+	imprimir(tamaño, "tablero1");
 
 
 	//Gameplay
-	//bool gameOver = false;
-	//while (!gameOver) {
+	bool gameOver = false;
+	bool turno = true; //true para jugado 1 false para jugador 2
+	
 
-	//}
+	
+
+	for (short i = 0; i < tamaño; i++) {
+		for (short j = 0; j < tamaño; j++) {
+			tableroJugador1[i][j] = '~';
+			tableroJugador2[i][j] = '~';
+		}
+	}
+	
+	while (!gameOver) {
+		turno ? turno = false : turno = true;
+		
+		short x, y;
+		//Jugador 1
+		if (turno) {
+			
+			std::cout<<"Introduce la fila" << std::endl;
+			std::cin >> x;
+
+			std::cout << "Introduce columna" << std::endl;
+			std::cin >> y;
+
+		}
+		else {//Turno del jugador 2
+			std::cout << "Introduce la fila" << std::endl;
+			std::cin >> x;
+
+			std::cout << "Introduce columna" << std::endl;
+			std::cin >> y;
+		}
+
+
+
+
+	}
 }
