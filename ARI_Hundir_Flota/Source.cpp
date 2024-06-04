@@ -9,21 +9,11 @@ const short tamaño = 10;
 char tablero1[tamaño][tamaño];
 char tablero2[tamaño][tamaño];
 
-//No hace falta porque crearemos dos punteros
-//Numero de la tabla para elejir la tabla en la que sequiere trabajar
-short numTabla = 1;
-
-//Inicialización de los punteros en sus respectivos matrices que pasaran como parámetro para las funciones
-//Inicialiazación de punteros globales para las dos matrices
-char* puntero = NULL;
-
 //Función actualizar matriz
 void actualizar(const short tamaño) {
 
-	//Comprobar 
 	for (short i = 0; i < tamaño; i++) {
 		for (short j = 0; j < tamaño; j++) {
-
 
 		}
 	}
@@ -52,25 +42,30 @@ void imprimir(const short tamaño) {
 	}
 }
 
-//Coididencia de barcos; numero tabla, fila, columna, puntero
-bool coincidencia(short numTabla, short x, short y, char* puntero) {
+//Función coididencia de 1 casilla si es '~' o no. Fila, columna y nombre del tablero
+bool coincidencia(short x, short y, std::string nombreTablero) {
 
-	if (numTabla == 1) {//correción de los magic numbers
+	//Inicialización de puntero
+	char* puntero = NULL;
+
+	//Comprobar que tablero del jugador apunta
+	if (nombreTablero == "tablero1") {//correción de los magic numbers
 		puntero = &tablero1[x][y];
 	}
-	else {
+	else if(nombreTablero == "tablero2") {
 		puntero = &tablero2[x][y];
 	}
+	else {//Si el nombre del tablero es diferente (Añadir otro jugador por ejemplo)
+		std::cout << "No hay este tablero" << std::endl;
+	}
 
-	//Para quitar la coicidencia de los barcos
+	//Comprovación de la casilla
 	if (*puntero != '~') {
 		return true;
 	}
 	else {
 		return false;
 	}
-
-
 }
 
 //Función para verificar
@@ -138,14 +133,14 @@ void modoV(char nombreTabla[tamaño][tamaño]) {
 
 void main() {
 	//Parte 1: Tablero
-	// Valores de la tablas por defeceto
+	// Valores de la tablas por defecto
 	for (short i = 0; i < tamaño; i++) {
 		for (short j = 0; j < tamaño; j++) {
 			tablero1[i][j] = '~';
 			tablero2[i][j] = '~';
 		}
 	}
-
+	//Mostrar tablero
 	imprimir(tamaño);
 
 	//Parte 2: Barcos
@@ -155,4 +150,5 @@ void main() {
 	const short barco5[5] = { '5','5','5','5','5' };
 	const short barco6[6] = { '6','6','6','6','6','6' };
 
+	std::cout<<coincidencia(2, 3, "tablero1");
 }
